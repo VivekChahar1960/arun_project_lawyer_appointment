@@ -7,7 +7,6 @@ import './HomePage.css'
 const HomePage = () => {
   const lawyers = useSelector((state) => state.lawyers.lawyers);
   const navigate = useNavigate();
-
   return (
     <div className="homepage">
       <h1 className="heading">Lawyer Appointment Management Web-Application</h1>

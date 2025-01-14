@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { lawyers } from "../mock/data";
-
+import dayjs from "dayjs";
 const initialState = {
   lawyers: [...lawyers]
 };
@@ -21,8 +21,19 @@ const lawyerSlice = createSlice({
         lawyer.appointments.push({ time: timeSlot });
       }
     },
+    resetAppointments: (state) => {
+      const today = dayjs();
+
+      state.lawyers = lawyers.map((lawyer) => ({
+        ...lawyer,
+        appointments: lawyer.appointments.filter(
+          (appointment) => dayjs(appointment.time).isAfter(today)
+        ),
+        availability: [...lawyer.availability], // Reset availability
+      }));
+    },
   },
 });
 
-export const { bookAppointment } = lawyerSlice.actions;
+export const { bookAppointment ,resetAppointments } = lawyerSlice.actions;
 export default lawyerSlice.reducer;
